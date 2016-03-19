@@ -7,26 +7,26 @@ var gulp = require('gulp'),
     Server = require('karma').Server;
 
 gulp.task('tslint', function () {
-    return gulp.src(['src/**/*.ts'])
+    return gulp.src(['src/main/**/*.ts'])
         .pipe(tslint())
         .pipe(tslint.report("prose", {emitError : false}));
 });
     
 gulp.task('compile', ['tslint'], function () {
-    return gulp.src(['src/**/*.ts'])
+    return gulp.src(['src/main/**/*.ts'])
         .pipe(ts(tsconfig.compilerOptions))
         .pipe(uglify())
         .pipe(gulp.dest('build'));
 });
 
 gulp.task('tslinttest', ['tslint'], function () {
-    return gulp.src(['test/**/*.ts'])
+    return gulp.src(['src/test/**/*.ts'])
         .pipe(tslint())
         .pipe(tslint.report("prose", {emitError : false}));
 });
 
 gulp.task('compiletest', ['tslinttest'], function () {
-    return gulp.src(['typings/**/*.ts', 'src/**/*.ts', 'test/**/*.ts'])
+    return gulp.src(['typings/**/*.ts', 'src/**/*.ts'])
         .pipe(ts(tsconfig.compilerOptions))
         .pipe(gulp.dest('test_build'));
 });
